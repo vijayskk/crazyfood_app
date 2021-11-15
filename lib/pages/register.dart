@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,74 +18,133 @@ class _ScreenRegisterState extends State<ScreenRegister> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
-
+  final _formkey = GlobalKey<FormState>();
+  bool disableinput = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(28.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Register",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(), hintText: "Email"),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Password",
+      body: Stack(
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: Form(
+                key: _formkey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Register",
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      enabled: !disableinput,
+                      validator: (e) {
+                        if (e != null) {
+                          if (EmailValidator.validate(e)) {
+                            return null;
+                          } else {
+                            return 'Invaied Email';
+                          }
+                        } else {
+                          return 'Email cannot be empty';
+                        }
+                      },
+                      controller: _usernameController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(), hintText: "Email"),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      enabled: !disableinput,
+                      validator: (e) {
+                        if (e != null) {
+                          if (e.length >= 8) {
+                            return null;
+                          } else {
+                            return 'Password must be 8 charecter or more';
+                          }
+                        } else {
+                          return 'Password cannot be empty';
+                        }
+                      },
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Password",
+                      ),
+                      obscureText: true,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      enabled: !disableinput,
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Full Name",
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          if (_formkey.currentState!.validate()) {
+                            register(
+                                _usernameController.text,
+                                _passwordController.text,
+                                _nameController.text,
+                                context);
+                          }
+                          ;
+                        },
+                        child: Text("Login")),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacementNamed('/login');
+                        },
+                        child: Text("Already have account"))
+                  ],
                 ),
-                obscureText: true,
               ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Full Name",
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    register(_usernameController.text, _passwordController.text,
-                        _nameController.text, context);
-                  },
-                  child: Text("Login")),
-              SizedBox(
-                height: 10,
-              ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacementNamed('/login');
-                  },
-                  child: Text("Already have account"))
-            ],
+            ),
           ),
-        ),
+          disableinput
+              ? AnimatedOpacity(
+                  duration: Duration(milliseconds: 1),
+                  opacity: disableinput ? 0.5 : 0,
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    color: Colors.black,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                )
+              : SizedBox(
+                  height: 0,
+                )
+        ],
       ),
     );
   }
 
   register(String u, String p, String n, BuildContext ctx) async {
+    setState(() {
+      disableinput = true;
+    });
     print(u);
     print(p);
     Response res = await post(
@@ -108,7 +168,27 @@ class _ScreenRegisterState extends State<ScreenRegister> {
         bool status =
             await sp.setString('token', jsonDecode(res2.body)["token"]);
         Navigator.of(ctx).pushReplacementNamed('/home');
+      } else {
+        setState(() {
+          disableinput = false;
+        });
+        ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+          content: Text("Something went wrong"),
+          padding: EdgeInsets.all(10),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.red,
+        ));
       }
+    } else {
+      setState(() {
+        disableinput = false;
+      });
+      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+        content: Text("Something went wrong"),
+        padding: EdgeInsets.all(10),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.red,
+      ));
     }
   }
 }
