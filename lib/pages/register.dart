@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -95,7 +96,7 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                     SizedBox(
                       height: 20,
                     ),
-                    ElevatedButton(
+                    CupertinoButton.filled(
                         onPressed: () {
                           if (_formkey.currentState!.validate()) {
                             register(
@@ -106,11 +107,11 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                           }
                           ;
                         },
-                        child: Text("Login")),
+                        child: Text("Register")),
                     SizedBox(
                       height: 10,
                     ),
-                    TextButton(
+                    CupertinoButton(
                         onPressed: () {
                           Navigator.of(context).pushReplacementNamed('/login');
                         },
