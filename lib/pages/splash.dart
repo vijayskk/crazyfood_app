@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenSplash extends StatefulWidget {
@@ -15,7 +18,18 @@ class _ScreenSplashState extends State<ScreenSplash> {
     if (token == null) {
       Navigator.of(context).pushReplacementNamed('/login');
     } else {
-      Navigator.of(context).pushReplacementNamed('/home');
+      Response res = await post(
+        Uri.parse(
+            "https://crazyfood-server.vercel.app/api/items/getallcategories"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{"token": token}),
+      );
+      if (res.statusCode == 200) {
+        await sp.setString('cats', res.body);
+        Navigator.of(context).pushReplacementNamed('/home');
+      }
     }
   }
 

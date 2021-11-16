@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:crazyfood_app/components/showcase.dart';
+import 'package:crazyfood_app/subpages/search.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,9 +50,7 @@ class _ScreenHomeState extends State<ScreenHome> {
         body: (currentindex == 0)
             ? ShowCase()
             : (currentindex == 1)
-                ? Center(
-                    child: Text("Search"),
-                  )
+                ? SubScreenSearch()
                 : (currentindex == 2)
                     ? Center(
                         child: Text("Cart"),

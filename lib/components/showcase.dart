@@ -2,11 +2,13 @@
 
 import 'dart:convert';
 
+import 'package:crazyfood_app/components/catitem.dart';
+import 'package:crazyfood_app/components/catitemselected.dart';
 import 'package:crazyfood_app/components/itemcard.dart';
+import 'package:crazyfood_app/components/itemsgrid.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'dart:math' as math;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,31 +24,39 @@ class ShowCase extends StatefulWidget {
 class _ShowCaseState extends State<ShowCase> {
   int currentcat = 0;
   List? data;
-  String currentcategory = "fastfood";
-
+  String? currentcategory;
+  List? fullcats;
   getData() async {
+    setState(() {
+      data = null;
+    });
     SharedPreferences sp = await SharedPreferences.getInstance();
     String? token = sp.getString('token');
-    if (token == null) {
+    String? cat = sp.getString('cats');
+    if (token == null || cat == null) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil('/splash', (route) => false);
     } else {
+      List cats = jsonDecode(cat);
+      setState(() {
+        fullcats = cats;
+      });
       Response res = await post(
-        Uri.parse("https://crazyfood-server.vercel.app/api/items/getall"),
+        Uri.parse(
+            "https://crazyfood-server.vercel.app/api/items/getbycategory"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, String>{"token": token}),
+        body: jsonEncode(<String, String>{
+          "token": token,
+          "category": cats[currentcat]["category"]
+        }),
       );
       print(res.body);
       if (res.statusCode == 200) {
         List getdata = jsonDecode(res.body);
         setState(() {
-          data = getdata.map((e) {
-            if (currentcategory == e["itemcategory"]) {
-              return e;
-            }
-          }).toList();
+          data = getdata;
         });
       }
     }
@@ -83,114 +93,58 @@ class _ShowCaseState extends State<ShowCase> {
           ),
           Expanded(
             flex: 2,
-            child: SizedBox(
-              width: double.infinity,
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (ctx, index) {
-                  if (currentcat == index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Container(
-                        width: 80,
-                        height: 50,
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.no_food,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                height: 6,
-                              ),
-                              Text(
-                                "Fastfood",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey,
-                                  spreadRadius: 5,
-                                  blurRadius: 5)
-                            ],
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color((math.Random().nextDouble() * 0x000000)
-                                    .toInt())
-                                .withOpacity(1)),
-                      ),
-                    );
-                  } else {
-                    return Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Container(
-                        width: 80,
-                        height: 50,
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.no_food,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                height: 6,
-                              ),
-                              Text(
-                                "Fastfood",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color((math.Random().nextDouble() * 0xFFFFFF)
-                                    .toInt())
-                                .withOpacity(1.0)),
-                      ),
-                    );
-                  }
-                },
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-              ),
-            ),
+            child: (fullcats != null)
+                ? SizedBox(
+                    width: double.infinity,
+                    child: ListView.builder(
+                      itemCount: fullcats!.length,
+                      itemBuilder: (ctx, index) {
+                        if (currentcat == index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                currentcat = index;
+                                getData();
+                              });
+                            },
+                            child: CatItemSelected(
+                              data: fullcats![index],
+                            ),
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                currentcat = index;
+                                getData();
+                              });
+                            },
+                            child: CatItem(
+                              data: fullcats![index],
+                            ),
+                          );
+                        }
+                      },
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                    ),
+                  )
+                : Center(
+                    child: CupertinoActivityIndicator(
+                      radius: 20,
+                    ),
+                  ),
           ),
           Expanded(
-              flex: 9,
-              child: (data != null)
-                  ? Container(
-                      padding: EdgeInsets.all(20),
-                      height: MediaQuery.of(context).size.height,
-                      child: GridView.count(
-                        physics: ScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        crossAxisCount: 2,
-                        children: data!.map((e) {
-                          return ItemCard(
-                              name: e["itemname"],
-                              price: e["itemprice"].toString(),
-                              image: e["image"],
-                              data: e);
-                        }).toList(),
-                      ),
-                    )
-                  : Center(
-                      child: CupertinoActivityIndicator(
-                        radius: 20,
-                      ),
-                    ))
+            flex: 9,
+            child: (data != null)
+                ? ItemsGrid(data: data!)
+                : Center(
+                    child: CupertinoActivityIndicator(
+                      radius: 20,
+                    ),
+                  ),
+          )
         ],
       ),
     );

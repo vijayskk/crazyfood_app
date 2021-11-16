@@ -1,3 +1,4 @@
+import 'package:crazyfood_app/pages/details.dart';
 import 'package:crazyfood_app/pages/home.dart';
 import 'package:crazyfood_app/pages/login.dart';
 import 'package:crazyfood_app/pages/register.dart';
