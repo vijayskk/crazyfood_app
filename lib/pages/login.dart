@@ -143,8 +143,21 @@ class _ScreenLoginState extends State<ScreenLogin> {
     print(res.body);
     if (res.statusCode == 200) {
       SharedPreferences sp = await SharedPreferences.getInstance();
-      bool status = await sp.setString('token', jsonDecode(res.body)["token"]);
-      Navigator.of(ctx).pushReplacementNamed('/home');
+      await sp.setString('token', jsonDecode(res.body)["token"]);
+      await sp.setString('email', jsonDecode(res.body)["email"]);
+      await sp.setString('name', jsonDecode(res.body)["name"]);
+      await sp.setString('mobileno', jsonDecode(res.body)["mobileno"]);
+      Navigator.of(ctx).pushReplacementNamed('/splash');
+    } else if (res.statusCode == 401) {
+      setState(() {
+        disableinput = false;
+      });
+      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+        content: Text("Invalied email or password"),
+        padding: EdgeInsets.all(10),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.red,
+      ));
     } else {
       setState(() {
         disableinput = false;

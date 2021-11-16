@@ -1,3 +1,4 @@
+import 'package:crazyfood_app/pages/addressmanager.dart';
 import 'package:crazyfood_app/pages/details.dart';
 import 'package:crazyfood_app/pages/home.dart';
 import 'package:crazyfood_app/pages/login.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         "/login": (BuildContext context) => ScreenLogin(),
         "/register": (BuildContext context) => ScreenRegister(),
         "/home": (BuildContext context) => ScreenHome(),
+        "/addressmanager": (BuildContext context) => ScreenAddressManager(),
       },
     );
   }

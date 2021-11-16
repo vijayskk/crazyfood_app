@@ -20,7 +20,7 @@ class _SubScreenSearchState extends State<SubScreenSearch> {
   List? data;
 
   getData() async {
-    setState(() {
+    setStateIfMounted(() {
       data = null;
     });
     SharedPreferences sp = await SharedPreferences.getInstance();
@@ -41,7 +41,7 @@ class _SubScreenSearchState extends State<SubScreenSearch> {
       print(res.body);
       if (res.statusCode == 200) {
         List getdata = jsonDecode(res.body);
-        setState(() {
+        setStateIfMounted(() {
           data = getdata;
         });
       }

@@ -19,6 +19,8 @@ class _ScreenRegisterState extends State<ScreenRegister> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
+  final _mobileController = TextEditingController();
+
   final _formkey = GlobalKey<FormState>();
   bool disableinput = false;
   @override
@@ -87,11 +89,54 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                     ),
                     TextFormField(
                       enabled: !disableinput,
+                      validator: (e) {
+                        if (e == _passwordController.text) {
+                          return null;
+                        } else {
+                          return 'Passwords wont match';
+                        }
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Confirm Password",
+                      ),
+                      obscureText: true,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      enabled: !disableinput,
                       controller: _nameController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Full Name",
                       ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      enabled: !disableinput,
+                      validator: (e) {
+                        if (e != null) {
+                          if (e.length == 10) {
+                            return null;
+                          } else {
+                            return 'Mobile number must be 10 digits';
+                          }
+                        } else {
+                          return 'Mobile No cannot be empty';
+                        }
+                      },
+                      controller: _mobileController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Mobile Number",
+                          suffix: Text(
+                            "+91",
+                            style: TextStyle(color: Colors.black),
+                          )),
                     ),
                     SizedBox(
                       height: 20,
@@ -103,6 +148,7 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                                 _usernameController.text,
                                 _passwordController.text,
                                 _nameController.text,
+                                _mobileController.text,
                                 context);
                           }
                           ;
@@ -142,19 +188,23 @@ class _ScreenRegisterState extends State<ScreenRegister> {
     );
   }
 
-  register(String u, String p, String n, BuildContext ctx) async {
+  register(String u, String p, String n, String m, BuildContext ctx) async {
     setState(() {
       disableinput = true;
     });
-    print(u);
-    print(p);
     Response res = await post(
       Uri.parse("https://crazyfood-server.vercel.app/api/auth/adduser"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{"email": u, "name": n, "password": p}),
+      body: jsonEncode(<String, String>{
+        "email": u,
+        "name": n,
+        "mobileno": m,
+        "password": p
+      }),
     );
+    print(res.body);
     if (res.statusCode == 200) {
       Response res2 = await post(
         Uri.parse("https://crazyfood-server.vercel.app/api/auth/login"),
@@ -163,11 +213,12 @@ class _ScreenRegisterState extends State<ScreenRegister> {
         },
         body: jsonEncode(<String, String>{"email": u, "password": p}),
       );
-      print(res2.body);
       if (res2.statusCode == 200) {
         SharedPreferences sp = await SharedPreferences.getInstance();
-        bool status =
-            await sp.setString('token', jsonDecode(res2.body)["token"]);
+        await sp.setString('token', jsonDecode(res2.body)["token"]);
+        await sp.setString('email', jsonDecode(res2.body)["email"]);
+        await sp.setString('name', jsonDecode(res2.body)["name"]);
+        await sp.setString('mobileno', jsonDecode(res2.body)["mobileno"]);
         Navigator.of(ctx).pushReplacementNamed('/home');
       } else {
         setState(() {
