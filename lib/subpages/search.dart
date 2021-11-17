@@ -99,9 +99,11 @@ class _SubScreenSearchState extends State<SubScreenSearch> {
                     padding: EdgeInsets.all(20),
                     child: ItemsGrid(data: data!),
                   ))
-                : Center(
-                    child: CupertinoActivityIndicator(
-                      radius: 30,
+                : Expanded(
+                    child: Center(
+                      child: CupertinoActivityIndicator(
+                        radius: 30,
+                      ),
                     ),
                   )
           ],

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,8 +44,29 @@ class _ScreenSplashState extends State<ScreenSplash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("splash"),
+      backgroundColor: Color(0xFFF4F3E2),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Center(
+              child: Image.asset('assets/hamburger.gif'),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 60,
+                child: Column(
+                  children: [
+                    CupertinoActivityIndicator(
+                      radius: 10,
+                    ),
+                    Text("Loading data...")
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

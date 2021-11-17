@@ -44,10 +44,21 @@ class _SubScreenAccountState extends State<SubScreenAccount> {
                     SizedBox(
                       height: 40,
                     ),
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: NetworkImage(
-                          "https://bestprofilepictures.com/wp-content/uploads/2021/04/Cool-Profile-Picture-For-Discord.jpg"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 150,
+                          height: 150,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(150)),
+                          child: Image.asset(
+                            "assets/pp.jpg",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 50,
@@ -82,7 +93,9 @@ class _SubScreenAccountState extends State<SubScreenAccount> {
                     ListTile(
                       leading: Icon(Icons.shopping_bag),
                       title: Text("My Orders"),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/orders');
+                      },
                     ),
                     ListTile(
                       leading: Icon(Icons.location_city),

@@ -64,43 +64,56 @@ class _ScreenAddressManagerState extends State<ScreenAddressManager> {
               context: context,
               builder: (ctx) {
                 final _addressController = TextEditingController();
-                return SimpleDialog(
-                  title: Text("Add an address"),
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: TextField(
-                        controller: _addressController,
-                        maxLines: 6,
-                        decoration: InputDecoration(
-                          hintText: "Enter an address",
-                          border: OutlineInputBorder(),
+                final _formkey = GlobalKey<FormState>();
+                return Form(
+                  key: _formkey,
+                  child: SimpleDialog(
+                    title: Text("Add an address"),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: TextFormField(
+                          validator: (e) {
+                            if (e != null && e.length > 9) {
+                              return null;
+                            } else {
+                              return 'Address need atleast 10 charecters';
+                            }
+                          },
+                          controller: _addressController,
+                          maxLines: 6,
+                          decoration: InputDecoration(
+                            hintText: "Enter an address",
+                            border: OutlineInputBorder(),
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 18.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(ctx).pop();
-                              },
-                              child: Text(
-                                "Cancel",
-                                style: TextStyle(color: Colors.red),
-                              )),
-                          TextButton(
-                              onPressed: () {
-                                addAddress(_addressController.text);
-                                Navigator.of(ctx).pop();
-                              },
-                              child: Text("Add address")),
-                        ],
-                      ),
-                    )
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(right: 18.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(ctx).pop();
+                                },
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(color: Colors.red),
+                                )),
+                            TextButton(
+                                onPressed: () {
+                                  if (_formkey.currentState!.validate()) {
+                                    addAddress(_addressController.text);
+                                    Navigator.of(ctx).pop();
+                                  }
+                                },
+                                child: Text("Add address")),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 );
               });
         },

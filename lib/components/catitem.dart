@@ -28,7 +28,9 @@ class CatItem extends StatelessWidget {
           ),
         ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: Colors.black),
+          borderRadius: BorderRadius.circular(10),
+          color: Color(int.parse("0xFF" + data["color"].substring(1))),
+        ),
       ),
     );
   }

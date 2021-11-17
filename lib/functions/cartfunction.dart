@@ -75,3 +75,18 @@ checkAvailable(Map item, List cart) {
     return null;
   }
 }
+
+int getTotal(List cart) {
+  if (cart.length > 0) {
+    int total = 0;
+    for (var i = 0; i < cart.length; i++) {
+      Map current = cart[i];
+      total = total +
+          int.parse(current["item"]["itemprice"]) *
+              int.parse(current["quantity"].toString());
+    }
+    return total;
+  } else {
+    return 0;
+  }
+}

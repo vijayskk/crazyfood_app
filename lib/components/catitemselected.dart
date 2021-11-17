@@ -28,9 +28,13 @@ class CatItemSelected extends StatelessWidget {
             ],
           ),
         ),
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(color: Colors.grey, spreadRadius: 5, blurRadius: 5)
-        ], borderRadius: BorderRadius.circular(10), color: Colors.black),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(color: Colors.grey, spreadRadius: 5, blurRadius: 5)
+          ],
+          borderRadius: BorderRadius.circular(10),
+          color: Color(int.parse("0xFF" + data["color"].substring(1))),
+        ),
       ),
     );
   }

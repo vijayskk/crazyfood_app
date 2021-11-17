@@ -1,12 +1,22 @@
 import 'package:crazyfood_app/pages/addressmanager.dart';
+import 'package:crazyfood_app/pages/checkout.dart';
 import 'package:crazyfood_app/pages/details.dart';
 import 'package:crazyfood_app/pages/home.dart';
 import 'package:crazyfood_app/pages/login.dart';
+import 'package:crazyfood_app/pages/orders.dart';
 import 'package:crazyfood_app/pages/register.dart';
 import 'package:crazyfood_app/pages/splash.dart';
+import 'package:crazyfood_app/pages/successpage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.white, // navigation bar color
+    statusBarColor: Colors.black, // status bar color
+    statusBarIconBrightness: Brightness.light,
+    systemNavigationBarIconBrightness: Brightness.dark,
+  ));
   runApp(const MyApp());
 }
 
@@ -28,6 +38,9 @@ class MyApp extends StatelessWidget {
         "/register": (BuildContext context) => ScreenRegister(),
         "/home": (BuildContext context) => ScreenHome(),
         "/addressmanager": (BuildContext context) => ScreenAddressManager(),
+        "/checkout": (BuildContext context) => ScreenCheckout(),
+        "/success": (BuildContext context) => ScreenSuccess(),
+        "/orders": (BuildContext context) => ScreenOrders(),
       },
     );
   }
