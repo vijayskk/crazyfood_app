@@ -136,8 +136,10 @@ class _ScreenAddressManagerState extends State<ScreenAddressManager> {
                 : Center(
                     child: Text(
                       "No addresses yet",
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey),
                     ),
                   )
             : Center(

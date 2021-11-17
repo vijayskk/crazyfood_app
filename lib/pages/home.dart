@@ -2,6 +2,7 @@
 
 import 'package:crazyfood_app/components/showcase.dart';
 import 'package:crazyfood_app/subpages/account.dart';
+import 'package:crazyfood_app/subpages/cart.dart';
 import 'package:crazyfood_app/subpages/search.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,9 +54,7 @@ class _ScreenHomeState extends State<ScreenHome> {
           : (currentindex == 1)
               ? SubScreenSearch()
               : (currentindex == 2)
-                  ? Center(
-                      child: Text("Cart"),
-                    )
+                  ? SubScreenCart()
                   : SubScreenAccount(),
     );
   }
