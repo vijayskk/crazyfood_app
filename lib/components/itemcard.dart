@@ -26,6 +26,7 @@ class ItemCard extends StatelessWidget {
                 )));
       },
       child: Card(
+        elevation: 0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -52,7 +53,7 @@ class ItemCard extends StatelessWidget {
                       child: Text(
                         name,
                         style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                            fontSize: 17, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -62,7 +63,7 @@ class ItemCard extends StatelessWidget {
                   child: Text(
                     "₹$price",
                     style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w500),
+                        fontSize: 17, fontWeight: FontWeight.w500),
                   ),
                 )
               ],
