@@ -2,7 +2,7 @@
     package="com.example.crazyfood_app">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="crazyfood_app"
+        android:label="CrazyFood"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

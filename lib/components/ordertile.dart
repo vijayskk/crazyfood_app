@@ -52,8 +52,9 @@ class _OrderTileState extends State<OrderTile> {
           Center(
             child: Column(
               children: [
-                Image.network(
-                    "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${widget.data["orderId"]}"),
+                CachedNetworkImage(
+                    imageUrl:
+                        "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${widget.data["orderId"]}"),
                 const SizedBox(
                   height: 5,
                 ),

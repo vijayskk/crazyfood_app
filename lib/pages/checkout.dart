@@ -619,6 +619,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
         await sp.setStringList('orders',
             [...prevorders, jsonEncode(jsonDecode(res.body)["order"])]);
       }
+      sp.setString('cart', '[]');
       Navigator.pushReplacementNamed(context, '/success');
     }
   }

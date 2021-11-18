@@ -16,7 +16,7 @@ class CatItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(data["emoji"]),
-              const SizedBox(
+              const SizedBox(   
                 height: 6,
               ),
               Text(
