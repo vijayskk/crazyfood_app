@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:crazyfood_app/components/ordertile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenOrders extends StatefulWidget {
@@ -44,6 +45,7 @@ class _ScreenOrdersState extends State<ScreenOrders> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         actions: [
           Padding(
             padding: const EdgeInsets.all(12.0),

@@ -161,5 +161,5 @@ class _ShowCaseState extends State<ShowCase> {
 
   void setStateIfMounted(f) {
     if (mounted) setState(f);
-  }
+  } 
 }

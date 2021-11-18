@@ -44,7 +44,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF4F3E2),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           children: [

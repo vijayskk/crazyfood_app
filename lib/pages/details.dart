@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:crazyfood_app/functions/cartfunction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,13 @@ class _ScreenDetailsState extends State<ScreenDetails> {
                       ),
                       child: Hero(
                         tag: widget.data["image"],
-                        child: Image.network(widget.data["image"]),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.data["image"],
+                          placeholder: (context, url) =>
+                              Center(child: CupertinoActivityIndicator()),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
                       ),
                     ),
                   ),

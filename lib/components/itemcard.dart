@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:crazyfood_app/pages/details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,19 +33,15 @@ class ItemCard extends StatelessWidget {
           children: [
             Hero(
               tag: image,
-              child: Image.network(
-                image,
-                loadingBuilder: (ctx, child, loadingevent) {
-                  if (loadingevent == null) {
-                    return child;
-                  }
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(28.0),
-                      child: CupertinoActivityIndicator(radius: 20),
-                    ),
-                  );
-                },
+              child: CachedNetworkImage(
+                imageUrl: image,
+                fit: BoxFit.contain,
+                placeholder: (context, url) => Container(
+                  width: double.infinity,
+                  height: 120,
+                  child: Center(child: CupertinoActivityIndicator()),
+                ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
             Row(

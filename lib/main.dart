@@ -12,10 +12,8 @@ import 'package:flutter/services.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.white, // navigation bar color
     statusBarColor: Colors.black, // status bar color
     statusBarIconBrightness: Brightness.light,
-    systemNavigationBarIconBrightness: Brightness.dark,
   ));
   runApp(const MyApp());
 }
