@@ -72,7 +72,7 @@ int getTotal(List cart) {
     for (var i = 0; i < cart.length; i++) {
       Map current = cart[i];
       total = total +
-          int.parse(current["item"]["itemprice"]) *
+          int.parse(current["item"]["itemprice"].toString()) *
               int.parse(current["quantity"].toString());
     }
     return total;

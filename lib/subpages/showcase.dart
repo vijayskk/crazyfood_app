@@ -67,12 +67,20 @@ class _ShowCaseState extends State<ShowCase> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.of(context).pushNamed('/checkout');
-        },
-        label: const Text("Checkout"),
-        icon: const Icon(Icons.check_circle_outlined),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Opacity(
+          opacity: 0.8,
+          child: FloatingActionButton.extended(
+            backgroundColor: Colors.black,
+            onPressed: () {
+              Navigator.of(context).pushNamed('/checkout');
+            },
+            label: const Text("Checkout"),
+            icon: const Icon(Icons.check_circle_outlined),
+          ),
+        ),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
