@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'dart:convert';
 
 import 'package:email_validator/email_validator.dart';
@@ -33,12 +31,12 @@ class _ScreenLoginState extends State<ScreenLogin> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Login",
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
@@ -55,10 +53,10 @@ class _ScreenLoginState extends State<ScreenLogin> {
                         }
                       },
                       controller: _usernameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: OutlineInputBorder(), hintText: "Email"),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
@@ -75,13 +73,13 @@ class _ScreenLoginState extends State<ScreenLogin> {
                         }
                       },
                       controller: _passwordController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Password",
                       ),
                       obscureText: true,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     CupertinoButton.filled(
@@ -91,8 +89,8 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                 _passwordController.text, context);
                           }
                         },
-                        child: Text("Login")),
-                    SizedBox(
+                        child: const Text("Login")),
+                    const SizedBox(
                       height: 10,
                     ),
                     CupertinoButton(
@@ -100,7 +98,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                           Navigator.of(context)
                               .pushReplacementNamed('/register');
                         },
-                        child: Text("Register instead"))
+                        child: const Text("Register instead"))
                   ],
                 ),
               ),
@@ -108,18 +106,18 @@ class _ScreenLoginState extends State<ScreenLogin> {
           ),
           disableinput
               ? AnimatedOpacity(
-                  duration: Duration(milliseconds: 1),
+                  duration: const Duration(milliseconds: 1),
                   opacity: disableinput ? 0.5 : 0,
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
                     color: Colors.black,
-                    child: Center(
+                    child: const Center(
                       child: CircularProgressIndicator(),
                     ),
                   ),
                 )
-              : SizedBox(
+              : const SizedBox(
                   height: 0,
                 )
         ],
@@ -131,8 +129,6 @@ class _ScreenLoginState extends State<ScreenLogin> {
     setState(() {
       disableinput = true;
     });
-    print(u);
-    print(p);
     Response res = await post(
       Uri.parse("https://crazyfood-server.vercel.app/api/auth/login"),
       headers: <String, String>{
@@ -140,7 +136,6 @@ class _ScreenLoginState extends State<ScreenLogin> {
       },
       body: jsonEncode(<String, String>{"email": u, "password": p}),
     );
-    print(res.body);
     if (res.statusCode == 200) {
       SharedPreferences sp = await SharedPreferences.getInstance();
       await sp.setString('token', jsonDecode(res.body)["token"]);
@@ -152,7 +147,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
       setState(() {
         disableinput = false;
       });
-      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
         content: Text("Invalied email or password"),
         padding: EdgeInsets.all(10),
         behavior: SnackBarBehavior.floating,
@@ -162,7 +157,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
       setState(() {
         disableinput = false;
       });
-      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
         content: Text("Something went wrong"),
         padding: EdgeInsets.all(10),
         behavior: SnackBarBehavior.floating,

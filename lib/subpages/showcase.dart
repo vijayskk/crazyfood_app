@@ -1,10 +1,7 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'dart:convert';
 
 import 'package:crazyfood_app/components/catitem.dart';
 import 'package:crazyfood_app/components/catitemselected.dart';
-import 'package:crazyfood_app/components/itemcard.dart';
 import 'package:crazyfood_app/components/itemsgrid.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +49,6 @@ class _ShowCaseState extends State<ShowCase> {
           "category": cats[currentcat]["category"]
         }),
       );
-      print(res.body);
       if (res.statusCode == 200) {
         List getdata = jsonDecode(res.body);
         setStateIfMounted(() {
@@ -64,7 +60,6 @@ class _ShowCaseState extends State<ShowCase> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData();
   }
@@ -76,8 +71,8 @@ class _ShowCaseState extends State<ShowCase> {
         onPressed: () {
           Navigator.of(context).pushNamed('/checkout');
         },
-        label: Text("Checkout"),
-        icon: Icon(Icons.check_circle_outlined),
+        label: const Text("Checkout"),
+        icon: const Icon(Icons.check_circle_outlined),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -93,7 +88,7 @@ class _ShowCaseState extends State<ShowCase> {
                   fit: BoxFit.cover,
                 ),
                 clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20),
                         bottomRight: Radius.circular(20))),
@@ -137,7 +132,7 @@ class _ShowCaseState extends State<ShowCase> {
                         shrinkWrap: true,
                       ),
                     )
-                  : Center(
+                  : const Center(
                       child: CupertinoActivityIndicator(
                         radius: 20,
                       ),
@@ -147,7 +142,7 @@ class _ShowCaseState extends State<ShowCase> {
               flex: 9,
               child: (data != null)
                   ? ItemsGrid(data: data!)
-                  : Center(
+                  : const Center(
                       child: CupertinoActivityIndicator(
                         radius: 30,
                       ),
@@ -161,5 +156,5 @@ class _ShowCaseState extends State<ShowCase> {
 
   void setStateIfMounted(f) {
     if (mounted) setState(f);
-  } 
+  }
 }

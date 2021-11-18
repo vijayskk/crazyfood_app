@@ -1,9 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenAddressManager extends StatefulWidget {
@@ -28,12 +25,10 @@ class _ScreenAddressManagerState extends State<ScreenAddressManager> {
         addresses = adr;
       });
     }
-    print(addresses);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getAddress();
   }
@@ -43,17 +38,18 @@ class _ScreenAddressManagerState extends State<ScreenAddressManager> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios_rounded,
               color: Colors.black,
             )),
-        title: Text(
+        title: const Text(
           "Saved Addresses",
           style: TextStyle(color: Colors.black),
         ),
@@ -68,7 +64,7 @@ class _ScreenAddressManagerState extends State<ScreenAddressManager> {
                 return Form(
                   key: _formkey,
                   child: SimpleDialog(
-                    title: Text("Add an address"),
+                    title: const Text("Add an address"),
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(20.0),
@@ -82,7 +78,7 @@ class _ScreenAddressManagerState extends State<ScreenAddressManager> {
                           },
                           controller: _addressController,
                           maxLines: 6,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Enter an address",
                             border: OutlineInputBorder(),
                           ),
@@ -97,7 +93,7 @@ class _ScreenAddressManagerState extends State<ScreenAddressManager> {
                                 onPressed: () {
                                   Navigator.of(ctx).pop();
                                 },
-                                child: Text(
+                                child: const Text(
                                   "Cancel",
                                   style: TextStyle(color: Colors.red),
                                 )),
@@ -108,7 +104,7 @@ class _ScreenAddressManagerState extends State<ScreenAddressManager> {
                                     Navigator.of(ctx).pop();
                                   }
                                 },
-                                child: Text("Add address")),
+                                child: const Text("Add address")),
                           ],
                         ),
                       )
@@ -117,36 +113,34 @@ class _ScreenAddressManagerState extends State<ScreenAddressManager> {
                 );
               });
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         backgroundColor: Colors.indigo,
       ),
       body: SafeArea(
         child: (addresses != null)
-            ? (addresses!.length != 0)
-                ? Container(
-                    child: ListView.builder(
-                      itemCount: addresses!.length,
-                      itemBuilder: (ctx, index) {
-                        return Column(
-                          children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            ListTile(
-                              trailing: IconButton(
-                                  onPressed: () {
-                                    deleteAddress(addresses![index]);
-                                  },
-                                  icon: Icon(Icons.delete)),
-                              title: Text(addresses![index]),
-                              leading: Icon(Icons.location_city),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
+            ? (addresses!.isNotEmpty)
+                ? ListView.builder(
+                    itemCount: addresses!.length,
+                    itemBuilder: (ctx, index) {
+                      return Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ListTile(
+                            trailing: IconButton(
+                                onPressed: () {
+                                  deleteAddress(addresses![index]);
+                                },
+                                icon: const Icon(Icons.delete)),
+                            title: Text(addresses![index]),
+                            leading: const Icon(Icons.location_city),
+                          ),
+                        ],
+                      );
+                    },
                   )
-                : Center(
+                : const Center(
                     child: Text(
                       "No addresses yet",
                       style: TextStyle(
@@ -155,7 +149,7 @@ class _ScreenAddressManagerState extends State<ScreenAddressManager> {
                           color: Colors.grey),
                     ),
                   )
-            : Center(
+            : const Center(
                 child: CupertinoActivityIndicator(
                   radius: 30,
                 ),

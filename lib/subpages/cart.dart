@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:crazyfood_app/functions/cartfunction.dart';
 import 'package:crazyfood_app/pages/details.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,12 +29,10 @@ class _SubScreenCartState extends State<SubScreenCart> {
         cartdata = [];
       });
     }
-    print(cartdata);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getCart();
   }
@@ -48,13 +45,13 @@ class _SubScreenCartState extends State<SubScreenCart> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
+              const Expanded(
                   flex: 2,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 18.0, horizontal: 28),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 18.0, horizontal: 28),
                       child: Text(
                         "Your Cart",
                         style: TextStyle(
@@ -63,7 +60,7 @@ class _SubScreenCartState extends State<SubScreenCart> {
                     ),
                   )),
               (cartdata != null)
-                  ? (cartdata!.length != 0)
+                  ? (cartdata!.isNotEmpty)
                       ? Expanded(
                           flex: 11,
                           child: ListView.builder(
@@ -80,14 +77,15 @@ class _SubScreenCartState extends State<SubScreenCart> {
                                       )
                                       .then((onGoBack));
                                 },
-                                contentPadding: EdgeInsets.all(10),
+                                contentPadding: const EdgeInsets.all(10),
                                 title: Text(cartdata![index]["item"]["itemname"]
                                     .toString()),
                                 subtitle: Text("₹" +
                                     cartdata![index]["item"]["itemprice"]
                                         .toString()),
-                                leading: Image.network(
-                                    cartdata![index]["item"]["image"]),
+                                leading: CachedNetworkImage(
+                                    imageUrl: cartdata![index]["item"]
+                                        ["image"]),
                                 trailing: SizedBox(
                                   width: 170,
                                   child: ListView(
@@ -110,7 +108,7 @@ class _SubScreenCartState extends State<SubScreenCart> {
                                                     cartdata![index]["item"],
                                                     cartdata!);
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 "-",
                                                 textScaleFactor: 1.5,
                                                 style: TextStyle(
@@ -119,7 +117,7 @@ class _SubScreenCartState extends State<SubScreenCart> {
                                           Text(
                                             cartdata![index]["quantity"]
                                                 .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -132,7 +130,7 @@ class _SubScreenCartState extends State<SubScreenCart> {
                                                       cartdata![index]["item"],
                                                       cartdata!);
                                                 },
-                                                child: Text(
+                                                child: const Text(
                                                   "+",
                                                   textScaleFactor: 1.5,
                                                   style: TextStyle(
@@ -149,7 +147,7 @@ class _SubScreenCartState extends State<SubScreenCart> {
                             itemCount: cartdata!.length,
                           ),
                         )
-                      : Expanded(
+                      : const Expanded(
                           flex: 11,
                           child: Center(
                             child: Text(
@@ -161,7 +159,7 @@ class _SubScreenCartState extends State<SubScreenCart> {
                             ),
                           ),
                         )
-                  : Expanded(
+                  : const Expanded(
                       flex: 11,
                       child: Center(
                         child: CupertinoActivityIndicator(
@@ -180,14 +178,14 @@ class _SubScreenCartState extends State<SubScreenCart> {
                       onPressed: () {
                         Navigator.of(context).pushNamed('/checkout');
                       },
-                      label: Text(
+                      label: const Text(
                         "Checkout",
                       ),
-                      icon: Icon(Icons.check_circle_outline_outlined),
+                      icon: const Icon(Icons.check_circle_outline_outlined),
                     ),
                   ),
                 )
-              : SizedBox(
+              : const SizedBox(
                   height: 0,
                 )
         ],

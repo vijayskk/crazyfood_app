@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CatItemSelected extends StatelessWidget {
-  Map data;
+  final Map data;
 
-  CatItemSelected({Key? key, required this.data}) : super(key: key);
+  const CatItemSelected({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +17,19 @@ class CatItemSelected extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(data["emoji"]),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
               Text(
                 data["category"],
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
               )
             ],
           ),
         ),
         decoration: BoxDecoration(
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(color: Colors.grey, spreadRadius: 5, blurRadius: 5)
           ],
           borderRadius: BorderRadius.circular(10),

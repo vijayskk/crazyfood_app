@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'dart:convert';
 
 import 'package:email_validator/email_validator.dart';
@@ -36,12 +34,12 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Register",
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
@@ -58,10 +56,10 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                         }
                       },
                       controller: _usernameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: OutlineInputBorder(), hintText: "Email"),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
@@ -78,13 +76,13 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                         }
                       },
                       controller: _passwordController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Password",
                       ),
                       obscureText: true,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
@@ -96,24 +94,24 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                           return 'Passwords wont match';
                         }
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Confirm Password",
                       ),
                       obscureText: true,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
                       enabled: !disableinput,
                       controller: _nameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Full Name",
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
@@ -130,7 +128,7 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                         }
                       },
                       controller: _mobileController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: "Mobile Number",
                           suffix: Text(
@@ -138,7 +136,7 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                             style: TextStyle(color: Colors.black),
                           )),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     CupertinoButton.filled(
@@ -151,17 +149,16 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                                 _mobileController.text,
                                 context);
                           }
-                          ;
                         },
-                        child: Text("Register")),
-                    SizedBox(
+                        child: const Text("Register")),
+                    const SizedBox(
                       height: 10,
                     ),
                     CupertinoButton(
                         onPressed: () {
                           Navigator.of(context).pushReplacementNamed('/login');
                         },
-                        child: Text("Already have account"))
+                        child: const Text("Already have account"))
                   ],
                 ),
               ),
@@ -169,18 +166,18 @@ class _ScreenRegisterState extends State<ScreenRegister> {
           ),
           disableinput
               ? AnimatedOpacity(
-                  duration: Duration(milliseconds: 1),
+                  duration: const Duration(milliseconds: 1),
                   opacity: disableinput ? 0.5 : 0,
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
                     color: Colors.black,
-                    child: Center(
+                    child: const Center(
                       child: CircularProgressIndicator(),
                     ),
                   ),
                 )
-              : SizedBox(
+              : const SizedBox(
                   height: 0,
                 )
         ],
@@ -204,7 +201,6 @@ class _ScreenRegisterState extends State<ScreenRegister> {
         "password": p
       }),
     );
-    print(res.body);
     if (res.statusCode == 200) {
       Response res2 = await post(
         Uri.parse("https://crazyfood-server.vercel.app/api/auth/login"),
@@ -224,7 +220,7 @@ class _ScreenRegisterState extends State<ScreenRegister> {
         setState(() {
           disableinput = false;
         });
-        ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
           content: Text("Something went wrong"),
           padding: EdgeInsets.all(10),
           behavior: SnackBarBehavior.floating,
@@ -235,7 +231,7 @@ class _ScreenRegisterState extends State<ScreenRegister> {
       setState(() {
         disableinput = false;
       });
-      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
         content: Text("Something went wrong"),
         padding: EdgeInsets.all(10),
         behavior: SnackBarBehavior.floating,

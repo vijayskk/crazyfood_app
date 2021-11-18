@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:crazyfood_app/functions/cartfunction.dart';
 import 'package:crazyfood_app/pages/details.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,7 +42,6 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
         cartdata = [];
       });
     }
-    print(cartdata);
   }
 
   getAddress() async {
@@ -61,12 +59,10 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
         }
       });
     }
-    print(addresses);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getCart();
     getAddress();
@@ -79,16 +75,16 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
         children: [
           SafeArea(
             child: (cartdata != null && addresses != null)
-                ? (cartdata!.length != 0)
+                ? (cartdata!.isNotEmpty)
                     ? ListView(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          Align(
+                          const Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                   vertical: 18.0, horizontal: 20),
                               child: Text(
                                 "Items to checkout",
@@ -111,11 +107,12 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                     )
                                     .then((onGoBack));
                               },
-                              contentPadding: EdgeInsets.all(10),
+                              contentPadding: const EdgeInsets.all(10),
                               title: Text(e["item"]["itemname"].toString()),
                               subtitle:
                                   Text("₹" + e["item"]["itemprice"].toString()),
-                              leading: Image.network(e["item"]["image"]),
+                              leading: CachedNetworkImage(
+                                  imageUrl: e["item"]["image"]),
                               trailing: SizedBox(
                                 width: 170,
                                 child: ListView(
@@ -134,7 +131,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                               removeAllCart(
                                                   e["item"], cartdata!);
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               "-",
                                               textScaleFactor: 1.5,
                                               style: TextStyle(
@@ -142,7 +139,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                             )),
                                         Text(
                                           e["quantity"].toString(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -150,7 +147,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                             onPressed: () {
                                               addCart(e["item"], cartdata!);
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               "+",
                                               textScaleFactor: 1.5,
                                               style: TextStyle(
@@ -163,13 +160,13 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                               ),
                             );
                           }).toList()),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Align(
+                          const Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                   vertical: 18.0, horizontal: 20),
                               child: Text(
                                 "Pick a delivery address",
@@ -178,7 +175,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Column(
@@ -193,12 +190,12 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                     },
                                     title: Text(e),
                                     leading: (selectedaddress == e)
-                                        ? Icon(Icons.check_circle_sharp)
-                                        : SizedBox(
+                                        ? const Icon(Icons.check_circle_sharp)
+                                        : const SizedBox(
                                             height: 0,
                                           ),
                                   ),
-                                  Divider()
+                                  const Divider()
                                 ],
                               );
                             }).toList(),
@@ -218,7 +215,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                       return Form(
                                         key: _formkey,
                                         child: SimpleDialog(
-                                          title: Text("Add an address"),
+                                          title: const Text("Add an address"),
                                           children: [
                                             Padding(
                                               padding:
@@ -234,7 +231,8 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                                 },
                                                 controller: _addressController,
                                                 maxLines: 6,
-                                                decoration: InputDecoration(
+                                                decoration:
+                                                    const InputDecoration(
                                                   hintText: "Enter an address",
                                                   border: OutlineInputBorder(),
                                                 ),
@@ -251,7 +249,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                                       onPressed: () {
                                                         Navigator.of(ctx).pop();
                                                       },
-                                                      child: Text(
+                                                      child: const Text(
                                                         "Cancel",
                                                         style: TextStyle(
                                                             color: Colors.red),
@@ -268,8 +266,8 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                                               .pop();
                                                         }
                                                       },
-                                                      child:
-                                                          Text("Add address")),
+                                                      child: const Text(
+                                                          "Add address")),
                                                 ],
                                               ),
                                             )
@@ -278,10 +276,10 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                       );
                                     });
                               },
-                              shape: StadiumBorder(),
+                              shape: const StadiumBorder(),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: const [
                                   Icon(Icons.add, color: Colors.white),
                                   Text(
                                     "Add an address",
@@ -291,13 +289,13 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Align(
+                          const Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                   vertical: 18.0, horizontal: 20),
                               child: Text(
                                 "Bill Details",
@@ -314,7 +312,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Item Total",
                                       textScaleFactor: 1.2,
                                     ),
@@ -324,13 +322,13 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                     ),
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   height: 30,
                                 ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  children: [
+                                  children: const [
                                     Text(
                                       "Restaurant charges",
                                       textScaleFactor: 1.2,
@@ -341,13 +339,13 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                     ),
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   height: 30,
                                 ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  children: [
+                                  children: const [
                                     Text(
                                       "Delivery charges",
                                       textScaleFactor: 1.2,
@@ -358,14 +356,14 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                     ),
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   height: 30,
                                 ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Total to pay",
                                       textScaleFactor: 1.5,
                                       style: TextStyle(
@@ -375,24 +373,24 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                       "₹" +
                                           (65 + getTotal(cartdata!)).toString(),
                                       textScaleFactor: 1.5,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   height: 30,
                                 )
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Align(
+                          const Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                   vertical: 18.0, horizontal: 20),
                               child: Text(
                                 "Select Payment Method",
@@ -412,12 +410,12 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                         color: Colors.blue),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: ListTile(
+                                  child: const ListTile(
                                       title: Text("Cash on Delivery"),
                                       subtitle: Text("Pay at your doorstep"),
                                       leading: Icon(Icons.money)),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Opacity(
@@ -429,7 +427,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                           color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    child: ListTile(
+                                    child: const ListTile(
                                       title: Text("Debit/Credit Card"),
                                       subtitle: Text("Coming Soon"),
                                       leading:
@@ -437,7 +435,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Opacity(
@@ -449,27 +447,28 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                           color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    child: ListTile(
+                                    child: const ListTile(
                                       title: Text("Upi Payment"),
                                       subtitle: Text("Coming Soon"),
                                       leading: Icon(Icons.phonelink_ring_sharp),
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10.0),
                                   child: RaisedButton(
-                                    padding: EdgeInsets.symmetric(vertical: 20),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20),
                                     color: Colors.indigo[900],
-                                    shape: StadiumBorder(),
+                                    shape: const StadiumBorder(),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: [
+                                      children: const [
                                         Icon(
                                             Icons.check_circle_outline_outlined,
                                             color: Colors.white),
@@ -500,11 +499,11 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                                       } else if (selectedaddress == null) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
-                                          content:
-                                              Text("Please add an address"),
+                                          content: const Text(
+                                              "Please add an address"),
                                           behavior: SnackBarBehavior.floating,
                                           backgroundColor: Colors.red[900],
-                                          margin: EdgeInsets.symmetric(
+                                          margin: const EdgeInsets.symmetric(
                                               horizontal: 10, vertical: 100),
                                         ));
                                       }
@@ -516,7 +515,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                           )
                         ],
                       )
-                    : Center(
+                    : const Center(
                         child: Text(
                           "Nothing to checkout",
                           style: TextStyle(
@@ -525,7 +524,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                               color: Colors.grey),
                         ),
                       )
-                : Center(
+                : const Center(
                     child: CupertinoActivityIndicator(
                       radius: 30,
                     ),
@@ -538,12 +537,12 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                     width: double.infinity,
                     height: double.infinity,
                     color: Colors.black,
-                    child: Center(
+                    child: const Center(
                       child: CircularProgressIndicator(),
                     ),
                   ),
                 )
-              : SizedBox(
+              : const SizedBox(
                   height: 0,
                 )
         ],
@@ -610,7 +609,6 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
       body: jsonEncode(
           <String, String>{"token": token, "order": jsonEncode(order)}),
     );
-    print(res.body);
     if (res.statusCode == 200) {
       SharedPreferences sp = await SharedPreferences.getInstance();
       List? prevorders = sp.getStringList('orders');

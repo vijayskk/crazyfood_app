@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'dart:convert';
 
 import 'package:crazyfood_app/components/ordertile.dart';
@@ -30,12 +28,10 @@ class _ScreenOrdersState extends State<ScreenOrders> {
         orders = odr;
       });
     }
-    print(orders);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getOrders();
   }
@@ -54,11 +50,11 @@ class _ScreenOrdersState extends State<ScreenOrders> {
                 setState(() {
                   orders = null;
                 });
-                await Future.delayed(Duration(milliseconds: 300));
+                await Future.delayed(const Duration(milliseconds: 300));
                 getOrders();
               },
-              label: Text("Refresh"),
-              icon: Icon(Icons.refresh),
+              label: const Text("Refresh"),
+              icon: const Icon(Icons.refresh),
             ),
           ),
         ],
@@ -68,38 +64,35 @@ class _ScreenOrdersState extends State<ScreenOrders> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios_rounded,
               color: Colors.black,
             )),
-        title: Text(
+        title: const Text(
           "MyOrders",
           style: TextStyle(color: Colors.black),
         ),
       ),
       body: SafeArea(
         child: (orders != null)
-            ? (orders!.length != 0)
-                ? Container(
-                    child: ListView.builder(
-                      itemCount: orders!.length,
-                      itemBuilder: (ctx, index) {
-                        return Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(18.0),
-                              child:
-                                  OrderTile(data: jsonDecode(orders![index])),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
+            ? (orders!.isNotEmpty)
+                ? ListView.builder(
+                    itemCount: orders!.length,
+                    itemBuilder: (ctx, index) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: OrderTile(data: jsonDecode(orders![index])),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      );
+                    },
                   )
-                : Center(
+                : const Center(
                     child: Text(
                       "No Orders yet",
                       style: TextStyle(
@@ -108,7 +101,7 @@ class _ScreenOrdersState extends State<ScreenOrders> {
                           color: Colors.grey),
                     ),
                   )
-            : Center(
+            : const Center(
                 child: CupertinoActivityIndicator(
                   radius: 30,
                 ),

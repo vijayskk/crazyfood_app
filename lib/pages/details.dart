@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -9,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenDetails extends StatefulWidget {
-  Map data;
+  final Map data;
 
-  ScreenDetails({Key? key, required this.data}) : super(key: key);
+  const ScreenDetails({Key? key, required this.data}) : super(key: key);
 
   @override
   State<ScreenDetails> createState() => _ScreenDetailsState();
@@ -45,12 +43,10 @@ class _ScreenDetailsState extends State<ScreenDetails> {
         counter = 0;
       });
     }
-    print(cartdata);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getCart();
   }
@@ -60,7 +56,7 @@ class _ScreenDetailsState extends State<ScreenDetails> {
     return Scaffold(
         body: (cartdata != null)
             ? ListView(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -75,9 +71,9 @@ class _ScreenDetailsState extends State<ScreenDetails> {
                         child: CachedNetworkImage(
                           imageUrl: widget.data["image"],
                           placeholder: (context, url) =>
-                              Center(child: CupertinoActivityIndicator()),
+                              const Center(child: CupertinoActivityIndicator()),
                           errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                              const Icon(Icons.error),
                         ),
                       ),
                     ),
@@ -89,10 +85,10 @@ class _ScreenDetailsState extends State<ScreenDetails> {
                       children: [
                         Text(
                           widget.data["itemname"],
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
@@ -102,21 +98,21 @@ class _ScreenDetailsState extends State<ScreenDetails> {
                               fontWeight: FontWeight.bold,
                               color: Colors.green[900]),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
                           widget.data["itemdescription"],
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w300),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Padding(
+                  const Padding(
                     padding: const EdgeInsets.only(left: 20.0),
                     child: Text(
                       "Rating",
@@ -124,7 +120,7 @@ class _ScreenDetailsState extends State<ScreenDetails> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -137,7 +133,7 @@ class _ScreenDetailsState extends State<ScreenDetails> {
                       Icon((rating > 4) ? Icons.star : Icons.star_border),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   SizedBox(
@@ -152,9 +148,9 @@ class _ScreenDetailsState extends State<ScreenDetails> {
                               padding: const EdgeInsets.all(8.0),
                               child: isAdded
                                   ? RaisedButton(
-                                      shape: StadiumBorder(),
+                                      shape: const StadiumBorder(),
                                       color: Colors.red,
-                                      child: Text(
+                                      child: const Text(
                                         "Remove",
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 20),
@@ -168,9 +164,9 @@ class _ScreenDetailsState extends State<ScreenDetails> {
                                       },
                                     )
                                   : RaisedButton(
-                                      shape: StadiumBorder(),
+                                      shape: const StadiumBorder(),
                                       color: Colors.green,
-                                      child: Text(
+                                      child: const Text(
                                         "Add to cart",
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 20),
@@ -205,14 +201,14 @@ class _ScreenDetailsState extends State<ScreenDetails> {
                                         }
                                       });
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       "-",
                                       textScaleFactor: 3,
                                       style: TextStyle(color: Colors.black),
                                     )),
                                 Text(
                                   counter.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -226,7 +222,7 @@ class _ScreenDetailsState extends State<ScreenDetails> {
                                         }
                                       });
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       "+",
                                       textScaleFactor: 3,
                                       style: TextStyle(color: Colors.black),
@@ -240,7 +236,7 @@ class _ScreenDetailsState extends State<ScreenDetails> {
                   )
                 ],
               )
-            : Center(
+            : const Center(
                 child: CupertinoActivityIndicator(
                   radius: 30,
                 ),

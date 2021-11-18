@@ -10,13 +10,12 @@ class ScreenSuccess extends StatefulWidget {
 
 class _ScreenSuccessState extends State<ScreenSuccess> {
   hidepop() async {
-    await Future.delayed(Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 4));
     Navigator.pushReplacementNamed(context, '/home');
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     hidepop();
   }
@@ -27,8 +26,8 @@ class _ScreenSuccessState extends State<ScreenSuccess> {
       body: SafeArea(
           child: Stack(
         children: [
-          ConfettiSample(),
-          Container(
+          const ConfettiSample(),
+          SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: Column(
@@ -37,7 +36,7 @@ class _ScreenSuccessState extends State<ScreenSuccess> {
               children: [
                 TweenAnimationBuilder(
                     tween: Tween<double>(begin: 0, end: 1),
-                    duration: Duration(seconds: 1),
+                    duration: const Duration(seconds: 1),
                     builder: (ctx, double value, child) {
                       return Opacity(
                         opacity: value,
@@ -51,14 +50,14 @@ class _ScreenSuccessState extends State<ScreenSuccess> {
                     )),
                 TweenAnimationBuilder(
                   tween: Tween<double>(begin: 0, end: 1),
-                  duration: Duration(milliseconds: 1000),
+                  duration: const Duration(milliseconds: 1000),
                   builder: (ctx, double value, child) {
                     return Opacity(
                       opacity: value,
                       child: child,
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     "Order placed",
                     style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
                   ),

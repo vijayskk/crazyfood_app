@@ -1,13 +1,14 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderTile extends StatefulWidget {
-  Map data;
-  OrderTile({Key? key, required this.data}) : super(key: key);
+  final Map data;
+  const OrderTile({Key? key, required this.data}) : super(key: key);
 
   @override
   State<OrderTile> createState() => _OrderTileState();
@@ -28,7 +29,6 @@ class _OrderTileState extends State<OrderTile> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getToken();
     super.initState();
   }
@@ -46,7 +46,7 @@ class _OrderTileState extends State<OrderTile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Center(
@@ -54,10 +54,10 @@ class _OrderTileState extends State<OrderTile> {
               children: [
                 Image.network(
                     "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${widget.data["orderId"]}"),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
-                Text("Show this at delivery")
+                const Text("Show this at delivery")
               ],
             ),
           ),
@@ -73,12 +73,12 @@ class _OrderTileState extends State<OrderTile> {
               return ListTile(
                 title: Text(e["item"]["itemname"].toString()),
                 subtitle: Text("₹" + e["item"]["itemprice"].toString()),
-                leading: Image.network(e["item"]["image"]),
+                leading: CachedNetworkImage(imageUrl: e["item"]["image"]),
                 trailing: Text("Nos: ${e["quantity"].toString()}"),
               );
             }).toList(),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           const Padding(
@@ -163,7 +163,8 @@ class _OrderTileState extends State<OrderTile> {
           ),
           (nowstatus != null)
               ? Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 15.0, horizontal: 20),
                   child: SizedBox(
                     width: double.infinity,
                     child: Row(
@@ -173,19 +174,19 @@ class _OrderTileState extends State<OrderTile> {
                         Text(
                           nowstatus!,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                   ),
                 )
-              : Center(
+              : const Center(
                   child: CupertinoActivityIndicator(
                     radius: 20,
                   ),
                 ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           )
         ],
@@ -201,7 +202,6 @@ class _OrderTileState extends State<OrderTile> {
       },
       body: jsonEncode(<String, String>{"token": token!, "orderId": orderId}),
     );
-    print(res.body);
     setState(() {
       nowstatus = jsonDecode(res.body)["status"];
     });

@@ -1,16 +1,14 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:crazyfood_app/pages/details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ItemCard extends StatelessWidget {
-  Map data;
-  String name;
-  String image;
-  String price;
-  ItemCard(
+  final Map data;
+  final String name;
+  final String image;
+  final String price;
+  const ItemCard(
       {Key? key,
       required this.name,
       required this.price,
@@ -36,12 +34,12 @@ class ItemCard extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: image,
                 fit: BoxFit.contain,
-                placeholder: (context, url) => Container(
+                placeholder: (context, url) => const SizedBox(
                   width: double.infinity,
                   height: 120,
                   child: Center(child: CupertinoActivityIndicator()),
                 ),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
             Row(
@@ -53,7 +51,7 @@ class ItemCard extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -63,7 +61,8 @@ class ItemCard extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 13.0),
                   child: Text(
                     "₹$price",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                 )
               ],

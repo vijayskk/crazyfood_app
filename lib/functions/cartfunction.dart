@@ -1,6 +1,6 @@
 addToCart(Map item, List cart) {
   bool isFind = false;
-  if (cart.length > 0) {
+  if (cart.isNotEmpty) {
     for (var i = 0; i < cart.length; i++) {
       Map current = cart[i];
       if (current["item"]["objectID"] == item["objectID"]) {
@@ -17,8 +17,7 @@ addToCart(Map item, List cart) {
 }
 
 removeFromCart(Map item, List cart) {
-  bool isFind = false;
-  if (cart.length > 0) {
+  if (cart.isNotEmpty) {
     for (var i = 0; i < cart.length; i++) {
       Map current = cart[i];
       if (current["item"]["objectID"] == item["objectID"]) {
@@ -27,42 +26,33 @@ removeFromCart(Map item, List cart) {
         } else {
           cart.remove(current);
         }
-        isFind = true;
         break;
       }
     }
     return cart;
   } else {
-    if (!isFind) {
-      print("Item doesnot exist");
-    }
     return [];
   }
 }
 
 removeAllFromCart(Map item, List cart) {
-  bool isFind = false;
-  if (cart.length > 0) {
+  if (cart.isNotEmpty) {
     for (var i = 0; i < cart.length; i++) {
       Map current = cart[i];
       if (current["item"]["objectID"] == item["objectID"]) {
         cart.remove(current);
-        isFind = true;
         break;
       }
     }
     return cart;
   } else {
-    if (!isFind) {
-      print("Item doesnot exist");
-    }
     return [];
   }
 }
 
 checkAvailable(Map item, List cart) {
   bool isFind = false;
-  if (cart.length > 0) {
+  if (cart.isNotEmpty) {
     for (var i = 0; i < cart.length; i++) {
       Map current = cart[i];
       if (current["item"]["objectID"] == item["objectID"]) {
@@ -77,7 +67,7 @@ checkAvailable(Map item, List cart) {
 }
 
 int getTotal(List cart) {
-  if (cart.length > 0) {
+  if (cart.isNotEmpty) {
     int total = 0;
     for (var i = 0; i < cart.length; i++) {
       Map current = cart[i];

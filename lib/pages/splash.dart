@@ -36,7 +36,6 @@ class _ScreenSplashState extends State<ScreenSplash> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     checklogin();
   }
@@ -53,10 +52,10 @@ class _ScreenSplashState extends State<ScreenSplash> {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: Container(
+              child: SizedBox(
                 height: 60,
                 child: Column(
-                  children: [
+                  children: const [
                     CupertinoActivityIndicator(
                       radius: 10,
                     ),

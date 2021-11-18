@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:convert';
 
 import 'package:crazyfood_app/components/itemsgrid.dart';
@@ -38,7 +36,6 @@ class _SubScreenSearchState extends State<SubScreenSearch> {
           "token": token,
         }),
       );
-      print(res.body);
       if (res.statusCode == 200) {
         List getdata = jsonDecode(res.body);
         setStateIfMounted(() {
@@ -50,7 +47,6 @@ class _SubScreenSearchState extends State<SubScreenSearch> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData();
   }
@@ -58,56 +54,53 @@ class _SubScreenSearchState extends State<SubScreenSearch> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: CupertinoSearchTextField(
-                onChanged: (e) {
-                  if (e == "") {
-                    setStateIfMounted(() {
-                      isTrend = true;
-                    });
-                    getData();
-                  } else {
-                    setStateIfMounted(() {
-                      isTrend = false;
-                    });
-                    search(e);
-                  }
-                },
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: CupertinoSearchTextField(
+              onChanged: (e) {
+                if (e == "") {
+                  setStateIfMounted(() {
+                    isTrend = true;
+                  });
+                  getData();
+                } else {
+                  setStateIfMounted(() {
+                    isTrend = false;
+                  });
+                  search(e);
+                }
+              },
             ),
-            (isTrend)
-                ? Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text(
-                      "🔥Now on Trending🔥",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  )
-                : SizedBox(
-                    height: 0,
+          ),
+          (isTrend)
+              ? const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text(
+                    "🔥Now on Trending🔥",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-            (data != null)
-                ? Expanded(
-                    child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: ItemsGrid(data: data!),
-                  ))
-                : Expanded(
-                    child: Center(
-                      child: CupertinoActivityIndicator(
-                        radius: 30,
-                      ),
+                )
+              : const SizedBox(
+                  height: 0,
+                ),
+          (data != null)
+              ? Expanded(
+                  child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: ItemsGrid(data: data!),
+                ))
+              : const Expanded(
+                  child: Center(
+                    child: CupertinoActivityIndicator(
+                      radius: 30,
                     ),
-                  )
-          ],
-        ),
+                  ),
+                )
+        ],
       ),
     );
   }
@@ -129,7 +122,6 @@ class _SubScreenSearchState extends State<SubScreenSearch> {
         },
         body: jsonEncode(<String, String>{"token": token, "word": str}),
       );
-      print(res.body);
       if (res.statusCode == 200) {
         List getdata = jsonDecode(res.body);
         setStateIfMounted(() {

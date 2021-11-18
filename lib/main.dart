@@ -1,6 +1,5 @@
 import 'package:crazyfood_app/pages/addressmanager.dart';
 import 'package:crazyfood_app/pages/checkout.dart';
-import 'package:crazyfood_app/pages/details.dart';
 import 'package:crazyfood_app/pages/home.dart';
 import 'package:crazyfood_app/pages/login.dart';
 import 'package:crazyfood_app/pages/orders.dart';
@@ -11,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.black, // status bar color
     statusBarIconBrightness: Brightness.light,
   ));
@@ -31,14 +30,15 @@ class MyApp extends StatelessWidget {
       title: "Crazyfood",
       initialRoute: "/splash",
       routes: {
-        "/splash": (BuildContext context) => ScreenSplash(),
-        "/login": (BuildContext context) => ScreenLogin(),
-        "/register": (BuildContext context) => ScreenRegister(),
-        "/home": (BuildContext context) => ScreenHome(),
-        "/addressmanager": (BuildContext context) => ScreenAddressManager(),
-        "/checkout": (BuildContext context) => ScreenCheckout(),
-        "/success": (BuildContext context) => ScreenSuccess(),
-        "/orders": (BuildContext context) => ScreenOrders(),
+        "/splash": (BuildContext context) => const ScreenSplash(),
+        "/login": (BuildContext context) => const ScreenLogin(),
+        "/register": (BuildContext context) => const ScreenRegister(),
+        "/home": (BuildContext context) => const ScreenHome(),
+        "/addressmanager": (BuildContext context) =>
+            const ScreenAddressManager(),
+        "/checkout": (BuildContext context) => const ScreenCheckout(),
+        "/success": (BuildContext context) => const ScreenSuccess(),
+        "/orders": (BuildContext context) => const ScreenOrders(),
       },
     );
   }

@@ -1,11 +1,8 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:crazyfood_app/subpages/showcase.dart';
 import 'package:crazyfood_app/subpages/account.dart';
 import 'package:crazyfood_app/subpages/cart.dart';
 import 'package:crazyfood_app/subpages/search.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({Key? key}) : super(key: key);
@@ -30,7 +27,7 @@ class _ScreenHomeState extends State<ScreenHome> {
           currentIndex: currentindex,
           fixedColor: Colors.blue,
           unselectedItemColor: Colors.black,
-          items: [
+          items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined),
                 label: 'Home',
@@ -52,12 +49,12 @@ class _ScreenHomeState extends State<ScreenHome> {
         ),
         body: SafeArea(
           child: (currentindex == 0)
-              ? ShowCase()
+              ? const ShowCase()
               : (currentindex == 1)
-                  ? SubScreenSearch()
+                  ? const SubScreenSearch()
                   : (currentindex == 2)
-                      ? SubScreenCart()
-                      : SubScreenAccount(),
+                      ? const SubScreenCart()
+                      : const SubScreenAccount(),
         ));
   }
 
